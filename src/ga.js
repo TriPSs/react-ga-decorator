@@ -9,7 +9,9 @@ export default function ga(gaTrackingID, options = null) {
     class AnalyticsWrapper extends React.Component {
 
       static propTypes = {
-        location: PropTypes.shape({}).isRequired
+        location: PropTypes.shape({
+          pathname: PropTypes.string.isRequired
+        }).isRequired
       }
 
       componentDidMount() {
