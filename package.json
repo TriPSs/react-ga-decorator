@@ -1,0 +1,39 @@
+{
+  "name": "react-ga-decorator",
+  "version": "1.0.0",
+  "description": "Decorator for React-GA",
+  "homepage": "https://github.com/TriPSs/react-ga-decorator",
+  "bugs": {
+    "url": "https://github.com/TriPss/react-ga-decorator/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Tycho Bokdam",
+    "email": "t.bokdam@seronaris.nl"
+  },
+  "main": "./ga.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/TriPSs/react-ga-decorator.git"
+  },
+  "scripts": {
+    "build": "babel src -d ./",
+    "prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "babel": "5.8.34",
+    "react": "^15.5.0",
+    "react-router": "^4.0.0",
+    "react-ga": "^2.2.0",
+    "prop-types": "^15.5.0"
+  },
+  "peerDependencies": {
+    "react": "^15.5.0",
+    "react-router": "^4.0.0",
+    "react-ga": "^2.2.0",
+    "prop-types": "^15.5.0"
+  }
+}
