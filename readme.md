@@ -9,6 +9,8 @@ React-GA-Decorator takes care of initializing and sending pageviews.
 
 For example, the following will send page views with tracking id `UA-000000-01` 
 ```js
+import ga from 'react-ga-decorator'
+
 @ga('UA-000000-01', { debug: __DEV__ })
 class AppContainer extends React.Component {
   render() {
