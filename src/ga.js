@@ -3,46 +3,46 @@ import PropTypes from 'prop-types'
 import ReactGA from 'react-ga'
 import { withRouter } from 'react-router'
 
-export default function ga(gaTrackingID, options = null) {
+export default (gaTrackingID, options = null) => Component => {
 
-  return function analyticsDecorator(Component) {
-    class AnalyticsWrapper extends React.Component {
+  const componentName = Component.displayName || Component.constructor.name || 'Component'
 
-      static propTypes = {
-        location: PropTypes.shape({
-          pathname: PropTypes.string.isRequired
-        }).isRequired
-      }
+  return withRouter(class extends React.Component {
 
-      componentDidMount() {
-        ReactGA.initialize(gaTrackingID, options)
+    static displayName = `Analytics(${componentName})`
 
+    static propTypes = {
+      location: PropTypes.shape({
+        pathname: PropTypes.string.isRequired,
+      }).isRequired,
+    }
+
+    componentDidMount() {
+      ReactGA.initialize(gaTrackingID, options)
+
+      this.sendPageView()
+    }
+
+    componentDidUpdate(prevProps) {
+      const { location: { pathname: newPathname } } = this.props
+      const { location: { pathname: oldPathname } } = prevProps
+
+      if (newPathname !== oldPathname) {
         this.sendPageView()
-      }
-
-      componentWillReceiveProps(nextProps) {
-        const { location: { pathname: newPathname } } = nextProps
-        const { location: { pathname: oldPathname } } = this.props
-
-        if (newPathname !== oldPathname) {
-          this.sendPageView(nextProps)
-        }
-      }
-
-      sendPageView = (props = this.props) => {
-        const { location: { pathname } } = props
-
-        ReactGA.pageview(pathname)
-      }
-
-      render() {
-        return (
-          <Component {...this.props} />
-        )
       }
     }
 
-    return withRouter(AnalyticsWrapper)
-  }
+    sendPageView = () => {
+      const { location: { pathname } } = this.props
+
+      ReactGA.pageview(pathname)
+    }
+
+    render() {
+      return (
+        <Component {...this.props} />
+      )
+    }
+  })
 
 }
